@@ -1,6 +1,5 @@
 class Solution:
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
-        intervals.sort()
         target_it = newInterval.copy()
         start_idx = -1
         end_idx = len(intervals)
