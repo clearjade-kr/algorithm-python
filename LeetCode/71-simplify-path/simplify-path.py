@@ -11,4 +11,4 @@ class Solution:
             else:
                 stack_path.append(d)
 
-        return "/%s" % "/".join(stack_path)
+        return f"/{'/'.join(stack_path)}"
