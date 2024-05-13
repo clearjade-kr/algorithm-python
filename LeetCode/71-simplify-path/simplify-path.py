@@ -6,8 +6,8 @@ class Solution:
             if not d or d == '.':
                 continue
             if d == "..":
-                if stack_path:                
-                    stack_path = stack_path[:len(stack_path) - 1]
+                if stack_path:
+                    stack_path.pop()
             else:
                 stack_path.append(d)
 
