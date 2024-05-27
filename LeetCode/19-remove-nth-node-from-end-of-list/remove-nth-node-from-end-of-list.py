@@ -7,6 +7,11 @@ class Solution:
             len_list += 1
             cur_node = cur_node.next
 
+        if len_list == 1:
+            return None
+        if len_list == n:
+            return head.next
+
         prev_node = None
         cur_node = head
 
