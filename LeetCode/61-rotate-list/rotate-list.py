@@ -17,12 +17,11 @@ class Solution:
         if k == 0:
             return orig_head
 
-        target_prev = None
         target_head = orig_head
-        for _ in range(len_list - k):
-            target_prev = target_head
+        for _ in range(len_list - k - 1):
             target_head = target_head.next
 
-        target_prev.next = None
+        ret_node = target_head.next
+        target_head.next = None
         orig_tail.next = orig_head
-        return target_head
+        return ret_node
