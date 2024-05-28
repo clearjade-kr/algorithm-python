@@ -1,33 +1,18 @@
 class Solution:
     def partition(self, head: Optional[ListNode], x: int) -> Optional[ListNode]:
-        if not head or not head.next:
-            return head
+        d1=c1=ListNode(0)
+        d2=c2=ListNode(0)
+        while head:
+            if head.val<x:
+                d1.next=head
+                d1=d1.next
 
-        dummy = ListNode(next=head)
-        node_big_prev = dummy
-        node_big = head
-
-        while node_big and node_big.val < x:
-            node_big_prev = node_big
-            node_big = node_big.next
-
-        if not node_big:
-            return head
-        
-        node_cur_prev = node_big
-        node_cur = node_big.next
-        while node_cur:
-            if node_cur.val < x:
-                next_node = node_cur.next
-                node_big_prev.next = node_cur
-                node_cur.next = node_big
-
-                node_cur_prev.next = next_node
-
-                node_big_prev = node_cur
-                node_cur = next_node
             else:
-                node_cur_prev = node_cur
-                node_cur = node_cur.next
+                d2.next=head
+                d2=d2.next
 
-        return dummy.next
+            head=head.next
+
+        d2.next=None
+        d1.next=c2.next
+        return c1.next
