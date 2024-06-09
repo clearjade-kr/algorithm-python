@@ -4,28 +4,31 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+def inorder_traversal(node):
+    result = []
+
+    if node.left:
+        result.extend(inorder_traversal(node.left))
+
+    result.append(node.val)
+
+    if node.right:
+        result.extend(inorder_traversal(node.right))
+
+    return result
+
+
 class BSTIterator:
     def __init__(self, root: Optional[TreeNode]):
-        self.list_nodes = []
-        self.next_idx = 0
-
-        def inorder(node):
-            if not node:
-                return
-            inorder(node.left)
-            self.list_nodes.append(node)
-            inorder(node.right)
-
-        inorder(root)
+        self.iterator = inorder_traversal(root)
+        self.idx = -1
 
     def next(self) -> int:
-        ret_val = self.list_nodes[self.next_idx].val
-        self.next_idx += 1
-        return ret_val
+        self.idx += 1
+        return self.iterator[self.idx]
 
     def hasNext(self) -> bool:
-        return self.next_idx < len(self.list_nodes)
-
+        return self.idx + 1 < len(self.iterator)
 
 # Your BSTIterator object will be instantiated and called as such:
 # obj = BSTIterator(root)
