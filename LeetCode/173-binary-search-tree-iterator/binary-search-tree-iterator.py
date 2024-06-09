@@ -4,19 +4,19 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+def inorder(node):
+    ret_nodes = []
+    if node.left:
+        ret_nodes.extend(inorder(node.left))
+    ret_nodes.append(node.val)
+    if node.right:
+        ret_nodes.extend(inorder(node.right))
+    return ret_nodes
+
+
 class BSTIterator:
     def __init__(self, root: Optional[TreeNode]):
         self.next_idx = 0
-
-        def inorder(node):
-            ret_nodes = []
-            if node.left:
-                ret_nodes.extend(inorder(node.left))
-            ret_nodes.append(node.val)
-            if node.right:
-                ret_nodes.extend(inorder(node.right))
-            return ret_nodes
-
         self.list_nodes = inorder(root)
 
     def next(self) -> int:
