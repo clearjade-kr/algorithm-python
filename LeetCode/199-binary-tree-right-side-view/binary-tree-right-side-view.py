@@ -9,17 +9,16 @@ class Solution:
         ret_list = []
         if not root:
             return ret_list
-        
+
         cur_nodes = [root]
         while cur_nodes:
             ret_list.append(cur_nodes[-1].val)
-            next_nodes = []
-            for node in cur_nodes:
+            num_cur = len(cur_nodes)
+            for i in range(num_cur):
+                node = cur_nodes.pop(0)
                 if node.left:
-                    next_nodes.append(node.left)
+                    cur_nodes.append(node.left)
                 if node.right:
-                    next_nodes.append(node.right)
-                    
-            cur_nodes = next_nodes
-        
+                    cur_nodes.append(node.right)
+
         return ret_list
