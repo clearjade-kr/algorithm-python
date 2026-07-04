@@ -12,6 +12,9 @@ class Solution:
             if k == 0:
                 return min(nums1[0], nums2[0])
             len1, len2 = len(nums1), len(nums2)
+            # To minimize the time complexity to O(log(min(len1, len2)))
+            # We always set the first array to be shorter
+            # If else, we get O(log(max(len1, len2)))
             if len1 > len2:
                 return find_kth(nums2, nums1, k)
             i = min(len1 - 1, k // 2)
