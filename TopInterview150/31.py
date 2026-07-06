@@ -23,7 +23,7 @@ class Solution:
             while target_pointer < len(nums) - 1 and nums[target_pointer + 1] > nums[pointer - 1]:
                 target_pointer += 1
             nums[pointer - 1], nums[target_pointer] = nums[target_pointer], nums[pointer - 1]
-            nums[pointer:] = sorted(nums[pointer:])
+            nums[pointer:] = nums[pointer:][::-1]
             
         return
     
