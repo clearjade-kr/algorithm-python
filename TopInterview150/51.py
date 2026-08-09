@@ -6,37 +6,53 @@ class Solution:
         # backtracking with having board as parameter
         ret_queens = []
 
-        def check_idx(list_queens, i, j):
-            for s in range(n):
-                if (i, s) in list_queens or (s, j) in list_queens:
-                    return False
-                target_diagonals = [(i + s, j + s), (i - s, j + s), (i - s, j - s), (i + s, j - s)]
-                for target in target_diagonals:
-                    if 0 <= target[0] < n and 0 <= target[1] < n and target in list_queens:
-                        return False
-            return True
+        # Plan to place queens each rows
+        # set_col: columns having queen
+        # set_rd : right down diagonal queen - right diagonal have same row - column value
+        # set_ld : left down diagonal queen - left diagonal have same row + column value
 
-        def backtrack(list_queens):
-            if len(list_queens) == n:
-                ret_queens.append(list_queens.copy())
+        set_col = set()
+        set_rd = set()
+        set_ld = set()
+
+        def check_idx(row, col):
+            if col in set_col:
+                return False
+            if row - col in set_rd:
+                return False
+            if row + col in set_ld:
+                return False
+            return True
+            
+        def backtrack(list_col):
+            if len(list_col) == n:
+                ret_queens.append(list_col.copy())
                 return
 
-            i = len(list_queens)
-            for j in range(n):
-                if not check_idx(list_queens=list_queens, i=i, j=j):
+            row = len(list_col)
+            for col in range(n):
+                if not check_idx(row=row, col=col):
                     continue
 
-                list_queens.append((i, j))
-                backtrack(list_queens=list_queens)
-                list_queens.pop()
+                list_col.append(col)
+                set_col.add(col)
+                set_rd.add(row - col)
+                set_ld.add(row + col)
+
+                backtrack(list_col=list_col)
+
+                list_col.pop()
+                set_col.remove(col)
+                set_rd.remove(row - col)
+                set_ld.remove(row + col)
 
         backtrack([])
 
         list_boards = []
         for queens in ret_queens:
             board = ['.' * n for _ in range(n)]
-            for queen in queens:
-                board[queen[0]] = board[queen[0]][:queen[1]] + 'Q' + board[queen[0]][queen[1] + 1:]
+            for i in range(len(queens)):
+                board[i] = '.' * queens[i] + 'Q' + '.' * (n - queens[i] - 1)
 
             list_boards.append(board)
 

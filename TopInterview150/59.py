@@ -4,19 +4,32 @@ from typing import List
 class Solution:
     def generateMatrix(self, n: int) -> List[List[int]]:
         matrix = [[-1] * n for _ in range(n)]
-        dx = [0, 1, 0, -1]
-        dy = [1, 0, -1, 0]
-        val = 1
-        x, y = 0, 0
-        dir = 0
-        while val <= n ** 2:
-            matrix[x][y] = val
-            val += 1
-            next_x, next_y = x + dx[dir], y + dy[dir]
-            if not (0 <= next_x < n and 0 <= next_y < n and matrix[next_x][next_y] == -1):
-                dir += 1
-                dir %= 4
-            x, y = x + dx[dir], y + dy[dir]
+        left, right, top, bottom = 0, n - 1, 0, n - 1
+        cur_val = 1
+        while left <= right and top <= bottom:
+            # Filling top row
+            for i in range(left, right + 1):
+                matrix[top][i] = cur_val
+                cur_val += 1
+            top += 1
+
+            # Filling right row
+            for i in range(top, bottom + 1):
+                matrix[i][right] = cur_val
+                cur_val += 1
+            right -= 1
+
+            # Filling bottom row
+            for i in range(right, left - 1, -1):
+                matrix[bottom][i] = cur_val
+                cur_val += 1
+            bottom -= 1
+
+            # Filling left row
+            for i in range(bottom, top - 1, -1):
+                matrix[i][left] = cur_val
+                cur_val += 1
+            left += 1
 
         return matrix
 
