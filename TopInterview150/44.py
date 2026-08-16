@@ -1,29 +1,41 @@
 class Solution:
     def isMatch(self, s: str, p: str) -> bool:
         # ? = any single char / * = any multiple char
-        # 2-dimensional DP approach
-        # dp[i][j]: s[:i] matches the pattern p[:j]
+        # two pointer approach with s index and p index
+        # save star index and count of chars ingested with star
+        # increase save count as we encounter mismatch
 
-        m, n = len(s), len(p)
-        dp = [[False] * (n + 1) for _ in range(m + 1)]
-        dp[0][0] = True
+        s_index, p_index = 0, 0
+        match_index = 0
+        star_index = -1
 
-        for i in range(1, n + 1):
-            if p[i - 1] == '*':
-                dp[0][i] = dp[0][i - 1]
+        while s_index < len(s):
+            # If current p char is ? or p char matches with s char
+            if p_index < len(p) and (p[p_index] == '?' or p[p_index] == s[s_index]):
+                p_index += 1
+                s_index += 1
 
-        for i in range(1, m + 1):
-            for j in range(1, n + 1):
-                if p[j - 1] == '?':
-                    dp[i][j] = dp[i - 1][j - 1]
-                elif p[j - 1] == '*':
-                    dp[i][j] = dp[i][j - 1] or dp[i - 1][j]
-                elif p[j - 1] == s[i - 1]:
-                    dp[i][j] = dp[i - 1][j - 1]
-                else:
-                    dp[i][j] = False
+            # If p char is star - save current index and start with 0 match
+            elif p_index < len(p) and p[p_index] == '*':
+                star_index = p_index
+                match_index = s_index
+                p_index += 1
 
-        return dp[-1][-1]
+            # Mismatch found, but has star index before
+            # Increase match index to 1 and start with match index again
+            elif star_index != -1:
+                p_index = star_index + 1
+                match_index += 1
+                s_index = match_index
+
+            else:
+                return False
+
+        # Drop remaining star patterns
+        while p_index < len(p) and p[p_index] == '*':
+            p_index += 1
+
+        return p_index == len(p)
 
 
 if __name__ == "__main__":
