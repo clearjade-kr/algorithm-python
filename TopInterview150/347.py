@@ -10,12 +10,10 @@ class Solution:
             dict_cnt[num] += 1
 
         list_cnt = list(dict_cnt.items())
-        list_cnt.sort(key = lambda x: x[1])
+        list_cnt.sort(key = lambda x: x[1], reverse=True)
 
-        ret_list = []
-        for i in range(k):
-            ret_list.append(list_cnt[len(list_cnt) - 1 - i][0])
-        return ret_list
+        return [cnt[0] for cnt in list_cnt[:k]]
+
 
 
 if __name__ == "__main__":
