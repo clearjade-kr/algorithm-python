@@ -3,16 +3,22 @@ from typing import List
 
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        from collections import defaultdict
+        # Applied bucket sort
+        count = {}
+        freq = [[] for _ in range(len(nums) + 1)]
 
-        dict_cnt = defaultdict(int)
         for num in nums:
-            dict_cnt[num] += 1
+            count[num] = count.get(num, 0) + 1
+            
+        for num, cnt in count.items():
+            freq[cnt].append(num)
 
-        list_cnt = list(dict_cnt.items())
-        list_cnt.sort(key = lambda x: x[1], reverse=True)
-
-        return [cnt[0] for cnt in list_cnt[:k]]
+        result = []
+        for i in range(len(freq) - 1, 0, -1):
+            for num in freq[i]:
+                result.append(num)
+                if len(result) == k:
+                    return result
 
 
 
