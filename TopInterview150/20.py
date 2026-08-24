@@ -1,30 +1,22 @@
 class Solution:
     def isValid(self, s: str) -> bool:
+        # Check length of s is even
         if len(s) % 2 != 0:
             return False
 
+        # map for matching brackets
+        matching = {')': '(', '}': '{', ']': '['}
         stack = []
-        while s:
-            while s and s[0] not in ")}]":
-                stack.append(s[0])
-                s = s[1:]
 
-            if not stack:
-                return False
-            elif not s:
-                break
+        for char in s:
+            if char in matching:
+                if not stack or stack[-1] != matching[char]:
+                    return False
+                stack.pop()  # O(1) pop
+            else:
+                stack.append(char)
 
-            if s[0] == '}' and stack[-1] != '{':
-                return False
-            elif s[0] == ')' and stack[-1] != '(':
-                return False
-            elif s[0] == ']' and stack[-1] != '[':
-                return False
-
-            s = s[1:]
-            stack = stack[:len(stack) - 1]
-
-        return not stack
+        return len(stack) == 0
 
 
 if __name__ == "__main__":
