@@ -22,7 +22,8 @@ class Solution:
 
 if __name__ == "__main__":
     sol = Solution()
-    heights = [2, 1, 5, 6, 2, 3]
+    # heights = [2, 1, 5, 6, 2, 3]
     # heights = [1]
     # heights = [2, 2]
+    heights = [2, 1, 2]
     print(sol.largestRectangleArea(heights=heights))    
